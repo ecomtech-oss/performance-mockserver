@@ -1,0 +1,10 @@
+FROM gradle:7.4.0
+
+COPY --chown=builder:builders . /opt/project/src
+WORKDIR /opt/project/src
+
+# ARG GRADLE_USER_HOME=/opt/project/gradle_user_home
+
+USER builder
+
+RUN ./gradlew build

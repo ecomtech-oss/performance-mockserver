@@ -1,0 +1,7 @@
+{
+    "data": {
+        "_service": {
+            "sdl": "schema {\n  query: Query\n}\n\ntype Product {\n  inStock: Boolean\n  quantity: Int\n  upc: String! @external\n}\n\ntype Query {\n  getProduct: Product!\n}\n"
+        }
+    }
+}
