@@ -56,7 +56,17 @@ public class MockServer {
         var jvmMetricsPath = System.getProperty("JVM_METRICS_PATH").toLowerCase();
         Configuration config = new Configuration()
             .metricsEnabled(true)
-            .logLevel(logLevel);
+            .logLevel(logLevel)
+            .maxLogEntries(1000)
+            .clientNioEventLoopThreadCount(10)
+            .actionHandlerThreadCount(5)
+            .maximumNumberOfRequestToReturnInVerificationFailure(1)
+            .attemptToProxyIfNoMatchingExpectation(false)
+            .maxSocketTimeoutInMillis(60000L);
+        if (logLevel.equals("ERROR")) {
+            config.disableLogging(true) 
+                .detailedMatchFailures(false);
+        }
         mockServer = ClientAndServer.startClientAndServer(config, clientPort);
 
         PrometheusMeterRegistry prometheusRegistry = new PrometheusMeterRegistry(
